@@ -1,10 +1,8 @@
 [package]
-name = "nes_book_emu"
+name = "rust_sdl2_nes"
 version = "0.1.0"
-authors = ["bugzmanov <bugzmanov@gmail.com>"]
+authors = ["cheft <m@cheft.cn>"]
 edition = "2018"
-
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
 lazy_static = "1.4.0"
