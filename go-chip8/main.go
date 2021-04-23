@@ -1,6 +1,5 @@
 package main
 
-// https://github.com/skatiyar/go-chip8
 import (
 	"fmt"
 	"image/color"
@@ -78,8 +77,8 @@ func (c *Chip8) Display() {
 
 func (c *Chip8) Exec() {
 	c.opcode = (uint16(c.memory[c.pc]) << 8) | uint16(c.memory[c.pc+1])
-	fmt.Printf("opcode %X\n", c.opcode)
-	fmt.Printf("opcode %X\n", c.opcode&0xF000)
+	// fmt.Printf("opcode %X\n", c.opcode)
+	// fmt.Printf("opcode %X\n", c.opcode&0xF000)
 	switch c.opcode & 0xF000 {
 	case 0x0000:
 		switch c.opcode & 0x000F {
@@ -304,11 +303,8 @@ func (c *Chip8) LoadRom(filename string) error {
 
 var chip8 *Chip8
 
-// Game implements ebiten.Game interface.
 type Game struct{}
 
-// Update proceeds the game state.
-// Update is called every tick (1/60 [s] by default).
 func (g *Game) Update() error {
 	if inpututil.IsKeyJustPressed(ebiten.Key1) {
 		chip8.Key(0x1, true)
@@ -412,8 +408,6 @@ func (g *Game) Update() error {
 	return nil
 }
 
-// Draw draws the game screen.
-// Draw is called every frame (typically 1/60[s] for 60Hz display).
 func (g *Game) Draw(screen *ebiten.Image) {
 	for i := 0; i < len(chip8.display); i++ {
 		for j := 0; j < len(chip8.display[i]); j++ {
@@ -425,24 +419,17 @@ func (g *Game) Draw(screen *ebiten.Image) {
 	// ebitenutil.DebugPrint(screen, fmt.Sprintf("TPS: %0.2f", ebiten.CurrentTPS()))
 }
 
-// Layout takes the outside size (e.g., the window size) and returns the (logical) screen size.
-// If you don't have to adjust the screen size with the outside size, just return a fixed size.
 func (g *Game) Layout(outsideWidth, outsideHeight int) (screenWidth, screenHeight int) {
 	return 64, 32
 }
 
 func main() {
 	chip8 = NewChip8()
-	// http://mir3z.github.io/chip8-emu/
 	// chip8.LoadRom("./roms/pong.c8")
 	// chip8.LoadRom("./roms/invaders.c8")
 	// chip8.LoadRom("./roms/Zero Demo [zeroZshadow, 2007].ch8")
-	// chip8.LoadRom("./roms/TETRIS")
-
-	// chip8.LoadRom("./roms/15 Puzzle [Roger Ivie].ch8")
-	// chip8.LoadRom("./roms/Keypad Test [Hap, 2006].ch8")
+	chip8.LoadRom("./roms/TETRIS")
 	game := &Game{}
-	// Specify the window size as you like. Here, a doubled size is specified.
 	// ebiten.SetWindowSize(64, 32) // 640, 320
 	ebiten.SetWindowSize(320, 160) // 640, 320
 	ebiten.SetWindowTitle("Chip8")
